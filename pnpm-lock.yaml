@@ -23,6 +23,9 @@ importers:
       pdf-lib:
         specifier: ^1.17.1
         version: 1.17.1
+      pdfjs-dist:
+        specifier: 3.11.174
+        version: 3.11.174
       react:
         specifier: ^18.0.0
         version: 18.3.1
@@ -30,8 +33,8 @@ importers:
         specifier: ^18.0.0
         version: 18.3.1(react@18.3.1)
       react-pdf:
-        specifier: ^7.0.0
-        version: 7.7.3(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^8.0.0
+        version: 8.0.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       vercel:
         specifier: ^36.0.0
         version: 36.0.0
@@ -2341,12 +2344,12 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-pdf@7.7.3:
-    resolution: {integrity: sha512-a2VfDl8hiGjugpqezBTUzJHYLNB7IS7a2t7GD52xMI9xHg8LdVaTMsnM9ZlNmKadnStT/tvX5IfV0yLn+JvYmw==}
+  react-pdf@8.0.2:
+    resolution: {integrity: sha512-C0PFC+j9vmEIZ82Iq0c85xUWkgsZTUS05syqOk8NC+7PAanyWlVi/ImYkGQe27zYAlBA6IidRYEt1DAAXKq1Ow==}
     peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -3352,7 +3355,7 @@ snapshots:
 
   '@types/react-pdf@7.0.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      react-pdf: 7.7.3(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-pdf: 8.0.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - encoding
@@ -5651,7 +5654,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-pdf@7.7.3(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-pdf@8.0.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       clsx: 2.1.1
       dequal: 2.0.3
@@ -5659,7 +5662,6 @@ snapshots:
       make-event-props: 1.6.2
       merge-refs: 1.3.0(@types/react@18.3.3)
       pdfjs-dist: 3.11.174
-      prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tiny-invariant: 1.3.3

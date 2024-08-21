@@ -12,8 +12,10 @@ import { pdfjs } from "react-pdf";
 import { PDFDocument, degrees } from "pdf-lib";
 import { Button, Spin, Tooltip, Upload } from "antd";
 import type { UploadProps } from "antd";
+import * as pdfjsLib from "pdfjs-dist/build/pdf";
+import pdfWorker from "pdfjs-dist/build/pdf.worker.entry";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -40,7 +42,7 @@ export default function Home() {
     },
   ];
   const [file, setFile] = useState<any>(null);
-  const [numPages, setNumPages] = useState(null);
+  const [numPages, setNumPages] = useState<any>(null);
   // 判断读取文件是否成功
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -70,7 +72,7 @@ export default function Home() {
     setNumPages(numPages._pdfInfo.numPages);
     // 初始化每个页面的旋转角度为 0
     const initialRotations = [];
-    for (let i = 1; i <= numPages; i++) {
+    for (let i = 1; i <= numPages._pdfInfo.numPages; i++) {
       initialRotations[i] = 0;
     }
     setRotations(initialRotations);
@@ -142,6 +144,25 @@ export default function Home() {
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
   };
+
+  const [loadingPages, setLoadingPages] = useState<any>({}); // 用于跟踪每个页面的加载状态
+
+  // 每个pdf页面加上loading
+  const onPageLoadSuccess = (pageNumber: number) => {
+    console.log("加载图片", pageNumber);
+    setLoadingPages((prevLoadingPages: any) => ({
+      ...prevLoadingPages,
+      [pageNumber]: false,
+    }));
+  };
+
+  const onPageLoadError = (pageNumber: number) => {
+    setLoadingPages((prevLoadingPages: any) => ({
+      ...prevLoadingPages,
+      [pageNumber]: false,
+    }));
+  };
+
   return (
     <main className="flex min-h-screen flex-col page-main">
       <section className="header">
@@ -173,7 +194,9 @@ export default function Home() {
           Simply click on a page to rotate it. You can then download your
           modified PDF.
         </p>
-        {loading && !success && <Spin className="spin-load" spinning={loading}></Spin>}
+        {loading && !success && (
+          <Spin className="spin-load" spinning={loading}></Spin>
+        )}
         {!loading && !success && (
           <div className="upload-empty">
             <div className="center">
@@ -241,16 +264,27 @@ export default function Home() {
                     className="main-page"
                     onClick={() => rotatePage(index + 1)}
                     key={index}
+                    style={{minWidth: '200px'}}
                   >
-                    <Page
-                      renderAnnotationLayer={false}
-                      renderTextLayer={false}
-                      key={`page_${index + 1}`}
-                      pageNumber={index + 1}
-                      width={200}
-                      scale={scale}
-                      rotate={rotations[index + 1]} // 使用对应页面的旋转角度
-                    />
+                    <Spin spinning={loadingPages[index + 1]}>
+                      <Page
+                        key={`page_${index + 1}`}
+                        pageNumber={index + 1}
+                        width={200}
+                        scale={scale}
+                        rotate={rotations[index + 1]} // 使用对应页面的旋转角度
+                        onLoadSuccess={() => onPageLoadSuccess(index + 1)}
+                        onLoadError={() => onPageLoadError(index + 1)}
+                        renderAnnotationLayer={false} // 关闭注释层的渲染，优化性能
+                        renderTextLayer={false} // 关闭文本层的渲染，优化性能
+                        onLoadStart={() =>
+                          setLoadingPages((prevLoadingPages: any) => ({
+                            ...prevLoadingPages,
+                            [index + 1]: true,
+                          }))
+                        }
+                      />
+                    </Spin>
                     <div className="refresh">
                       <SyncOutlined />
                     </div>
