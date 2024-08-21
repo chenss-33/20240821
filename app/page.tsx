@@ -149,7 +149,6 @@ export default function Home() {
 
   // 每个pdf页面加上loading
   const onPageLoadSuccess = (pageNumber: number) => {
-    console.log("加载图片", pageNumber);
     setLoadingPages((prevLoadingPages: any) => ({
       ...prevLoadingPages,
       [pageNumber]: false,
