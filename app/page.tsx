@@ -272,7 +272,6 @@ export default function Home() {
       <section className="bottom">
         <div className="content">
           <div className="section1 box">
-            {/* <img src="" alt="" /> */}
             <p className="desc">
               Chat with any PDF: ask questions, get summaries, find information,
               and more.
