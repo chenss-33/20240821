@@ -146,7 +146,6 @@ export default function Home() {
     <main className="flex min-h-screen flex-col page-main">
       <section className="header">
         <div className="left">
-          {/* <img src="" alt="" /> */}
           <div>PDF.ai</div>
         </div>
         <div className="right">
